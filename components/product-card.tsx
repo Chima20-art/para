@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ShoppingCart, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { toast } from "sonner"
 import { useCart } from "@/lib/cart"
 import type { Database } from "@/lib/supabase"
 
@@ -24,6 +25,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             price: product.price,
             image_url: product.image_url,
             brand: product.brand,
+        })
+
+        toast.success("Produit ajouté !", {
+            description: `${product.name} a été ajouté à votre panier.`,
         })
     }
 

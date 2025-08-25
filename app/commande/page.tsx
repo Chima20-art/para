@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
 import { useCart } from "@/lib/cart"
 import { supabase } from "@/lib/supabase"
 import ClientLayout from "@/components/client-layout"
@@ -82,12 +83,18 @@ export default function CheckoutPage() {
 
             if (itemsError) throw itemsError
 
+            toast.success("Commande confirmée !", {
+                description: `Votre commande ${orderNumber} a été créée avec succès.`,
+            })
+
             // Clear cart and redirect
             clearCart()
             router.push(`/commande/confirmation?order=${orderNumber}`)
         } catch (error) {
             console.error("Error creating order:", error)
-            alert("Une erreur est survenue lors de la création de votre commande. Veuillez réessayer.")
+            toast.error("Erreur", {
+                description: "Une erreur est survenue lors de la création de votre commande. Veuillez réessayer.",
+            })
         } finally {
             setLoading(false)
         }
